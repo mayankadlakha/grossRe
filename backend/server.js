@@ -57,10 +57,22 @@ router.post("/updateData", (req, res) => {
 // this method removes existing data in our database
 router.delete("/deleteData", (req, res) => {
   const { id } = req.body;
-  Data.findOneAndDelete(id, err => {
-    if (err) return res.send(err);
-    return res.json({ success: true });
-  });
+  if(id){
+    console.log("ID about to be detled: " + id);
+    Data.findByIdAndRemove(id, err => {
+      if (err) return res.send(err);
+      return res.json({ success: true });
+    });
+  }
+});
+
+//delete all
+router.delete("/deleteAll", (req, res) => {
+    console.log("Deleting all ids");
+    Data.remove(({}), err => {
+      if (err) return res.send(err);
+      return res.json({ success: true });
+    });
 });
 
 // this is our create methid
