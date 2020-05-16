@@ -58,8 +58,7 @@ router.post("/updateData", (req, res) => {
 router.delete("/deleteData", (req, res) => {
   const { id } = req.body;
   if(id){
-    console.log("ID about to be detled: " + id);
-    Data.findByIdAndRemove(id, err => {
+    Data.findOneAndDelete({id: id}, err => {
       if (err) return res.send(err);
       return res.json({ success: true });
     });
@@ -68,7 +67,6 @@ router.delete("/deleteData", (req, res) => {
 
 //delete all
 router.delete("/deleteAll", (req, res) => {
-    console.log("Deleting all ids");
     Data.remove(({}), err => {
       if (err) return res.send(err);
       return res.json({ success: true });
