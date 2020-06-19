@@ -1,7 +1,9 @@
 // /client/App.js
 import React, { Component } from "react";
 import { addNewItem, getGroceryList, updateItem, deleteItem, deleteList } from "./localStorage";
-import { getNextItemId, isItemInList } from "./Selectors";
+import { getNextItemId, isItemInList, getItemById } from "./Selectors";
+import List from "./components/List";
+import Input from "./components/Input";
 
 class App extends Component {
   // initialize our state 
@@ -9,7 +11,7 @@ class App extends Component {
     data: [],
     id: 0,
     name: 'null',
-    intervalIsSet: false,
+    quantity: 0,
     idToDelete: null,
     objectToUpdate: null
   };
@@ -26,10 +28,11 @@ class App extends Component {
     this.setState({data: groceryList});
   };
 
-  putDataToDB = name => {
+  putDataToDB = (name, quantity) => {
     addNewItem({
       id: getNextItemId(this.state),
-      name: name
+      name: name,
+      quantity: quantity
     });
 
     this.getDataFromDb();
@@ -47,40 +50,55 @@ class App extends Component {
   }
 
   updateDB = (idToUpdate, updateToApply) => {
-    if (isItemInList(this.state, idToUpdate)){
+    if (isItemInList(this.state, idToUpdate)){ 
       updateItem(idToUpdate, updateToApply);
       this.getDataFromDb();
     };
   };
 
+  addToItem = ( itemId )=>{
+    const itemInState = getItemById(this.state, itemId);
+    const newItem = {
+      ...itemInState,
+      quantity: parseInt(itemInState.quantity) + 1,
+    }
+    
+    this.updateDB(itemId, newItem);
+  }
+
+   subtractFromItem = ( itemId )=>{
+    const itemInState = getItemById(this.state, itemId);
+    const newItem = {
+      ...itemInState,
+      quantity: parseInt(itemInState.quantity) - 1,
+    }
+    
+    this.updateDB(itemId, newItem);
+  }
+
   render() {
     const { data } = this.state;
     return (
       <div style={{textAlign: "center"}}>
-          <button onClick={() => this.deleteAllFromDB()}>
-            Clear All
-          </button>
-        <ul style={{padding: "10px", alignItems: "center", justifyContent: "center"}}>
-          {data.length <= 0
-            ? "NO DB ENTRIES YET"
-            : data.map(dat => (
-                <ul style={{padding: "10px"}} key={data.name}>
-                  {dat.name} &nbsp;
-                  {dat.id}
-                  <button onClick={() => this.deleteOneFromDB(dat.id)}>
-                    Delete
-                  </button>
-                </ul>
-              ))}
-        </ul>
+        <button onClick={() => this.deleteAllFromDB()}>
+          Clear All
+        </button>
+        <List
+          data={data}
+          onAdd={this.addToItem}
+          onSubtract={this.subtractFromItem}
+          onDeleteListItem={this.deleteOneFromDB}
+        />
         <div style={{ padding: "10px" }}>
-          <input
-            type="text"
+          <Input
             onChange={e => this.setState({ name: e.target.value })}
-            placeholder="add something in the database"
-            style={{ width: "200px" }}
+            placeholder="Item"
           />
-          <button onClick={() => this.putDataToDB(this.state.name)}>
+          <Input
+            onChange={e => this.setState({ quantity: e.target.value })}
+            placeholder="Quantity"
+          />
+          <button onClick={() => this.putDataToDB(this.state.name, this.state.quantity)}>
             ADD
           </button>
         </div>
