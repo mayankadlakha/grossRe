@@ -1,9 +1,11 @@
 // /client/App.js
 import React, { Component } from "react";
 import { addNewItem, getGroceryList, updateItem, deleteItem, deleteList } from "./localStorage";
-import { getNextItemId, isItemInList, getItemById } from "./Selectors";
+import { getNextItemId, isItemInList, getItemById, getNewItem } from "./Selectors";
 import List from "./components/List";
 import Input from "./components/Input";
+import DropDown from "./components/Dropdown";
+import GroceryType from "./components/GroceryType";
 
 class App extends Component {
   // initialize our state 
@@ -28,13 +30,10 @@ class App extends Component {
     this.setState({data: groceryList});
   };
 
-  putDataToDB = (name, quantity) => {
+  putDataToDB = () => {
     addNewItem({
-      id: getNextItemId(this.state),
-      name: name,
-      quantity: parseInt(quantity)
-    });
-
+      ...getNewItem(this.state)
+      });
     this.getDataFromDb();
   };
 
@@ -107,7 +106,13 @@ class App extends Component {
             onChange={e => this.setState({ quantity: e.target.value })}
             placeholder="Quantity"
           />
-          <button onClick={() => this.putDataToDB(this.state.name, this.state.quantity)}>
+          <DropDown
+            name='type'
+            options={Object.values(GroceryType)}
+            selectedOption={GroceryType.Frozen}
+            onSelectDropdown={({e}) => this.setState({ type: e.target.value })}
+          />
+          <button onClick={() => this.putDataToDB()}>
             ADD
           </button>
         </div>
