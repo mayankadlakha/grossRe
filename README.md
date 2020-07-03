@@ -1,6 +1,6 @@
 # grossRe
 Grocery App
 
-*Basic list
+* ~Basic list~
 *Sorted in sections by category (table)
 *Ingredients from a recipe

@@ -76,6 +76,13 @@ class App extends Component {
     this.updateDB(itemId, newItem);
   }
 
+  onSelectDropdown = ({e, id}) => {
+    const updateToApply = {
+      type: e.target.value,
+    };
+    this.updateDB(id, updateToApply);
+  }
+
   render() {
     const { data } = this.state;
     return (
@@ -88,6 +95,7 @@ class App extends Component {
           onAdd={this.addToItem}
           onSubtract={this.subtractFromItem}
           onDeleteListItem={this.deleteOneFromDB}
+          onSelectDropdown={this.onSelectDropdown}
         />
         <div style={{ padding: "10px" }}>
           <Input

@@ -10,7 +10,6 @@ export const addNewItem = (newItem) => {
 
 export const updateItem = (itemIdToUpdate, updateToApply) => {
   const currentGroceryList = getGroceryList();
-  console.log(itemIdToUpdate, updateToApply)
   const newGroceryList = currentGroceryList.map(
     item => item.id === parseInt(itemIdToUpdate) ? {...item, ...updateToApply} : item
     );
