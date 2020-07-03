@@ -4,11 +4,11 @@ const DropDown = ({
   name,
   itemId,
   options,
-  selectedoptions,
+  selectedOption,
   onSelectDropdown,
 }) => {
 
-  const isItemSelected = (item) => item === selectedoptions ? "selected" : "";
+  const isItemSelected = (item) => item === selectedOption ? "selected" : "";
 
 return (
   <select name={name} id={itemId} onChange={(e) => onSelectDropdown({e, itemId})}>

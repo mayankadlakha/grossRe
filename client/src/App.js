@@ -32,7 +32,7 @@ class App extends Component {
     addNewItem({
       id: getNextItemId(this.state),
       name: name,
-      quantity: quantity
+      quantity: parseInt(quantity)
     });
 
     this.getDataFromDb();
@@ -76,11 +76,12 @@ class App extends Component {
     this.updateDB(itemId, newItem);
   }
 
-  onSelectDropdown = ({e, id}) => {
+  onSelectType = ({e, itemId}) => {
+    console.log(e.target.value, itemId)
     const updateToApply = {
       type: e.target.value,
     };
-    this.updateDB(id, updateToApply);
+    this.updateDB(itemId, updateToApply);
   }
 
   render() {
@@ -95,7 +96,7 @@ class App extends Component {
           onAdd={this.addToItem}
           onSubtract={this.subtractFromItem}
           onDeleteListItem={this.deleteOneFromDB}
-          onSelectDropdown={this.onSelectDropdown}
+          onSelectType={this.onSelectType}
         />
         <div style={{ padding: "10px" }}>
           <Input

@@ -8,7 +8,7 @@ const List = ({
   onAdd,
   onSubtract,
   onDeleteListItem,
-  onSelectDropdown,
+  onSelectType,
 }
 ) => (
 <ul style={{padding: "10px", alignItems: "center", justifyContent: "center"}}>
@@ -25,7 +25,7 @@ const List = ({
             itemId={item.id}
             options={[GroceryType.Junk, GroceryType.Vegetables, GroceryType.Frozen]}
             selectedOption={item.type}
-            onSelectDropdown={onSelectDropdown}
+            onSelectDropdown={onSelectType}
           />
           <button onClick={() => onDeleteListItem(item.id)}>
             Delete
