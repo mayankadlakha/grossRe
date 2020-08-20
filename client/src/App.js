@@ -1,11 +1,9 @@
 // /client/App.js
 import React, { Component } from "react";
 import { addNewItem, getGroceryList, updateItem, deleteItem, deleteList } from "./localStorage";
-import { getNextItemId, isItemInList, getItemById, getNewItem } from "./Selectors";
+import { isItemInList, getItemById, getNewItem } from "./Selectors";
 import List from "./components/List";
-import Input from "./components/Input";
-import DropDown from "./components/Dropdown";
-import GroceryType from "./components/GroceryType";
+import AddItem from "./components/AddItem";
 
 class App extends Component {
   // initialize our state 
@@ -31,6 +29,7 @@ class App extends Component {
   };
 
   putDataToDB = () => {
+    console.log(getNewItem(this.state))
     addNewItem({
       ...getNewItem(this.state)
       });
@@ -97,25 +96,12 @@ class App extends Component {
           onDeleteListItem={this.deleteOneFromDB}
           onSelectType={this.onSelectType}
         />
-        <div style={{ padding: "10px" }}>
-          <Input
-            onChange={e => this.setState({ name: e.target.value })}
-            placeholder="Item"
-          />
-          <Input
-            onChange={e => this.setState({ quantity: e.target.value })}
-            placeholder="Quantity"
-          />
-          <DropDown
-            name='type'
-            options={Object.values(GroceryType)}
-            selectedOption={GroceryType.Frozen}
-            onSelectDropdown={({e}) => this.setState({ type: e.target.value })}
-          />
-          <button onClick={() => this.putDataToDB()}>
-            ADD
-          </button>
-        </div>
+        <AddItem 
+          onItemNameChange = {e => this.setState({ name: e.target.value })} 
+          onItemQuantityChange = {e => this.setState({ quantity: e.target.value })} 
+          onSelectType={({e}) => this.setState({ type: e.target.value })}
+          onAddItem={() => this.putDataToDB()}
+        />
         <div style={{ padding: "10px" }}>
           <input
             type="text"
