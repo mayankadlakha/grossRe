@@ -25,14 +25,14 @@ class App extends Component {
 
   getDataFromDb = () => {
     const groceryList = getGroceryList();
-    this.setState({data: groceryList});
+    this.setState({ data: groceryList });
   };
 
   putDataToDB = () => {
     console.log(getNewItem(this.state))
     addNewItem({
       ...getNewItem(this.state)
-      });
+    });
     this.getDataFromDb();
   };
 
@@ -48,44 +48,45 @@ class App extends Component {
   }
 
   updateDB = (idToUpdate, updateToApply) => {
-    if (isItemInList(this.state, idToUpdate)){ 
+    if (isItemInList(this.state, idToUpdate)) {
       updateItem(idToUpdate, updateToApply);
       this.getDataFromDb();
     };
   };
 
-  addToItem = ( itemId )=>{
+  addToItem = (itemId) => {
     const itemInState = getItemById(this.state, itemId);
     const newItem = {
       ...itemInState,
       quantity: parseInt(itemInState.quantity) + 1,
     }
-    
+
     this.updateDB(itemId, newItem);
   }
 
-   subtractFromItem = ( itemId )=>{
+  subtractFromItem = (itemId) => {
     const itemInState = getItemById(this.state, itemId);
     const newItem = {
       ...itemInState,
       quantity: parseInt(itemInState.quantity) - 1,
     }
-    
+
     this.updateDB(itemId, newItem);
   }
 
-  onSelectType = ({e, itemId}) => {
-    console.log(e.target.value, itemId)
-    const updateToApply = {
-      type: e.target.value,
-    };
-    this.updateDB(itemId, updateToApply);
-  }
+  onSelectType = ({ e, itemId }) => {
+    console.log("onSelectType")
+    // console.log(e.target.value, itemId)
+    // const updateToApply = {
+    //   type: e.target.value,
+    // };
+    // this.updateDB(itemId, updateToApply);
+  };
 
   render() {
     const { data } = this.state;
     return (
-      <div style={{textAlign: "center"}}>
+      <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
         <button onClick={() => this.deleteAllFromDB()}>
           Clear All
         </button>
@@ -96,10 +97,10 @@ class App extends Component {
           onDeleteListItem={this.deleteOneFromDB}
           onSelectType={this.onSelectType}
         />
-        <AddItem 
-          onItemNameChange = {e => this.setState({ name: e.target.value })} 
-          onItemQuantityChange = {e => this.setState({ quantity: e.target.value })} 
-          onSelectType={({e}) => this.setState({ type: e.target.value })}
+        <AddItem
+          onItemNameChange={e => this.setState({ name: e.target.value })}
+          onItemQuantityChange={e => this.setState({ quantity: e.target.value })}
+          onSelectType={({ e }) => this.setState({ type: e.target.value })}
           onAddItem={() => this.putDataToDB()}
         />
         <div style={{ padding: "10px" }}>
@@ -117,7 +118,7 @@ class App extends Component {
           />
           <button
             onClick={() =>
-              this.updateDB(this.state.idToUpdate, {name: this.state.updateToApply})
+              this.updateDB(this.state.idToUpdate, { name: this.state.updateToApply })
             }
           >
             UPDATE
