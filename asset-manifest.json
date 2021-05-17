@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/grossRe/static/js/main.95055697.chunk.js",
+    "main.js.map": "/grossRe/static/js/main.95055697.chunk.js.map",
+    "runtime-main.js": "/grossRe/static/js/runtime-main.5fb48eb6.js",
+    "runtime-main.js.map": "/grossRe/static/js/runtime-main.5fb48eb6.js.map",
+    "static/js/2.e9f35a04.chunk.js": "/grossRe/static/js/2.e9f35a04.chunk.js",
+    "static/js/2.e9f35a04.chunk.js.map": "/grossRe/static/js/2.e9f35a04.chunk.js.map",
+    "index.html": "/grossRe/index.html",
+    "precache-manifest.f085ced13506cad683b6def4aff3eef4.js": "/grossRe/precache-manifest.f085ced13506cad683b6def4aff3eef4.js",
+    "service-worker.js": "/grossRe/service-worker.js",
+    "static/js/2.e9f35a04.chunk.js.LICENSE.txt": "/grossRe/static/js/2.e9f35a04.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5fb48eb6.js",
+    "static/js/2.e9f35a04.chunk.js",
+    "static/js/main.95055697.chunk.js"
+  ]
+}
